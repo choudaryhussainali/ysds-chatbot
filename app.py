@@ -82,7 +82,7 @@ google_api_key = st.secrets.get("GOOGLE_API_KEY")
 
 # Paths to your images - UPDATE THESE IF NECESSARY
 logo_path = "icon.jpeg"  # Assuming logo is in the same directory
-background_path = "bgimage.png"   # Assuming background is in the same directory
+background_path = "bg.png"   # Assuming background is in the same directory
 
 # Set the background
 set_background(background_path)
