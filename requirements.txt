@@ -1,0 +1,7 @@
+streamlit
+requests
+groq
+langchain
+faiss-cpu
+langchain-google-genai
+python-dotenv
