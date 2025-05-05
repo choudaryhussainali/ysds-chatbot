@@ -81,15 +81,15 @@ st.title("🎓Welcome to **YSDS**")
 google_api_key = st.secrets.get("GOOGLE_API_KEY")
 
 # Paths to your images - UPDATE THESE IF NECESSARY
-logo_path = "images\icon.jpeg"  # Assuming logo is in the same directory
-background_path = "images/bgimage.png"   # Assuming background is in the same directory
+logo_path = "icon.jpeg"  # Assuming logo is in the same directory
+background_path = "bgimage.png"   # Assuming background is in the same directory
 
 # Set the background
 set_background(background_path)
 
 with st.sidebar:
     # Display the logo in the sidebar
-    st.image("images\logo.jpeg", use_container_width=150)
+    st.image("logo.jpeg", use_container_width=150)
 
     st.markdown(
         """
