@@ -37,7 +37,7 @@ def assistant_chat_css(logo_file):
         st.error(f"Error encoding logo: {e}")
         return ""
 
-    # Apply custom CSS for the assistant chat icon
+
     st.markdown(assistant_chat_css(logo_path), unsafe_allow_html=True)
 
 
@@ -647,13 +647,20 @@ _"I'm only here to help you with anything related to Yashfeen Skills Development
 
 """
 
+if "chat_history" not in st.session_state:
+    st.session_state["chat_history"] = []
+    st.session_state["has_greeted"] = False 
+
+
+if "memory" not in st.session_state:
+    st.session_state["memory"] = ConversationBufferMemory()
+
+
+
 
 # Initialize Gemini LLM and conversation memory
 if google_api_key:
     llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash", google_api_key=google_api_key, temperature=0.5)
-    # Set up the conversation memory and prompt template
-    memory = ConversationBufferMemory()
-
     prompt_template = PromptTemplate(
         input_variables=["history", "input"],
         template="""
@@ -667,7 +674,7 @@ Assistant:""".strip()
 
     chain = ConversationChain(
         llm=llm,
-        memory=memory,
+        memory=st.session_state["memory"],
         prompt=prompt_template.partial(script=SCRIPT),
         verbose=False
     )
@@ -679,13 +686,13 @@ else:
 st.markdown(assistant_chat_css(logo_path), unsafe_allow_html=True)
 
 # Initialize session state
-if "messages" not in st.session_state:
-    st.session_state.messages = [
-        {"role": "assistant", "content": "👋Hi! I'm Sam, Your informational guide from **Yashfeen Skills Development Services**. Ask me anything about courses, fees, or admissions!☺️"}
-    ]
+if not st.session_state["has_greeted"]:
+    initial_greeting = "👋Hi! I'm Sam, Your informational guide from **Yashfeen Skills Development Services**. Ask me anything about courses, fees, or admissions!☺️"
+    st.session_state["chat_history"].append({"role": "assistant", "content": initial_greeting})
+    st.session_state["has_greeted"] = True
 
 # Display message history
-for msg in st.session_state.messages:
+for msg in st.session_state["chat_history"]:
     with st.chat_message(msg["role"]):
         st.markdown(msg["content"])
 
@@ -695,13 +702,13 @@ for msg in st.session_state.messages:
 user_input = st.chat_input("Ask something about Yashfeen Education System...")
 if user_input:
     st.chat_message("user").markdown(user_input)
-    st.session_state.messages.append({"role": "user", "content": user_input})
+    st.session_state["chat_history"].append({"role": "user", "content": user_input})
 
     with st.chat_message("assistant"):
         with st.spinner("Thinking..."):
             try:
                 bot_response = chain.run(user_input)
                 st.markdown(bot_response)
-                st.session_state.messages.append({"role": "assistant", "content": bot_response})
+                st.session_state["chat_history"].append({"role": "assistant", "content": bot_response})
             except Exception as e:
                 st.error(f"Error: {e}")
