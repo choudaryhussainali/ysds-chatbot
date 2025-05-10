@@ -73,18 +73,17 @@ def set_background(image_file):
     except Exception as e:
         st.error(f"Error encoding background image: {e}")
 
-# Page setup
+
 st.set_page_config(page_title="YSDS - Yashfeen Skills Development Services", layout="wide", page_icon="💡")
 st.title("🎓Welcome to **YSDS**")
 
-# Load API key securely from .streamlit/secrets.toml
 google_api_key = st.secrets.get("GOOGLE_API_KEY")
 
-# Paths to your images - UPDATE THESE IF NECESSARY
-logo_path = "icon.jpeg"  # Assuming logo is in the same directory
-background_path = "bg.png"   # Assuming background is in the same directory
 
-# Set the background
+logo_path = "icon.jpeg"  
+background_path = "bg.png" 
+
+
 set_background(background_path)
 
 with st.sidebar:
@@ -153,7 +152,6 @@ with st.sidebar:
         st.success("Chat history cleared!")
 
 
-# Knowledge script (strict)
 SCRIPT = """
 You are **Sam**, Courses and informational Guide at Yashfeen Skills Development Services.\
 You are ai assisted bot of Yashfeen Skills Development Services (YSDS) institute.\
@@ -657,8 +655,6 @@ if "memory" not in st.session_state:
 
 
 
-
-# Initialize Gemini LLM and conversation memory
 if google_api_key:
     llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash", google_api_key=google_api_key, temperature=0.5)
     prompt_template = PromptTemplate(
@@ -682,23 +678,19 @@ else:
     st.error("Google API key not found. Please add it to `.streamlit/secrets.toml` as GOOGLE_API_KEY")
     st.stop()
 
-# Apply custom CSS for the assistant chat icon
 st.markdown(assistant_chat_css(logo_path), unsafe_allow_html=True)
 
-# Initialize session state
 if not st.session_state["has_greeted"]:
     initial_greeting = "👋Hi! I'm Sam, Your informational guide from **Yashfeen Skills Development Services**. Ask me anything about courses, fees, or admissions!☺️"
     st.session_state["chat_history"].append({"role": "assistant", "content": initial_greeting})
     st.session_state["has_greeted"] = True
 
-# Display message history
 for msg in st.session_state["chat_history"]:
     with st.chat_message(msg["role"]):
         st.markdown(msg["content"])
 
 
 
-# Input field
 user_input = st.chat_input("Ask something about Yashfeen Education System...")
 if user_input:
     st.chat_message("user").markdown(user_input)
