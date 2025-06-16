@@ -24,6 +24,33 @@ This project is an AI-powered chatbot built for **Yashfeen Skills Development Se
 
 ---
 
+## 🧠 Tech Stack
+
+| Layer        | Library / Service |
+|--------------|-------------------|
+| Frontend     | Streamlit         |
+| LLM          | Google Gemini Pro (Flash) via LangChain |
+| Memory       | `ConversationBufferMemory` |
+| Prompting    | `PromptTemplate` (strict scripted persona) |
+| Styling      | Inline CSS + base64‑encoded images |
+
+---
+
+## 📁 Project Structure
+
+ysds-chatbot/
+├── .streamlit/
+│ └── secrets.toml
+├── assets/
+│ ├── icon.jpeg
+│ ├── bg.png
+│ └── logo.jpeg
+├── app.py
+├── requirements.txt
+└── README.md
+
+---
+
 ## 🧪 How to Run Locally
 
 1. Clone this repository:
