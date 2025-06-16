@@ -38,7 +38,7 @@ This project is an AI-powered chatbot built for **Yashfeen Skills Development Se
 
 ## 📁 Project Structure
 
-   '''bash
+'''
       ysds-chatbot/
       │
       ├── .streamlit/
@@ -53,6 +53,7 @@ This project is an AI-powered chatbot built for **Yashfeen Skills Development Se
       ├── requirements.txt                # Python dependencies (see below)
       ├── README.md                       # full project documentation (see below)
       └── LICENSE                         # optional open‑source licence
+'''
 
 ---
 
