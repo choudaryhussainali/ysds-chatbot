@@ -29,7 +29,7 @@ This project is an AI-powered chatbot built for **Yashfeen Skills Development Se
 
 
 
----> Install Dependencies.
+--->  Install Dependencies.
 
 pip install -r requirements.txt
 
@@ -41,7 +41,7 @@ GOOGLE_API_KEY = "your_gemini_api_key_here"
 
 -->   streamlit run app.py
 
-📷 Preview
+> 📷 Preview
 
 
 ![Screenshot (27)](https://github.com/user-attachments/assets/6da01bf8-8249-4f11-bd1b-d2a9cdb7af5f)
