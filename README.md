@@ -29,17 +29,17 @@ This project is an AI-powered chatbot built for **Yashfeen Skills Development Se
 
 
 
---->  Install Dependencies.
+## Install Dependencies.
+  ```bash
+     pip install -r requirements.txt
 
-pip install -r requirements.txt
 
-
--->  Add your Google API key in .streamlit/secrets.toml:
+## Add your Google API key in .streamlit/secrets.toml.
 
 GOOGLE_API_KEY = "your_gemini_api_key_here"
 
 
--->   streamlit run app.py
+ streamlit run app.py
 
 > 📷 Preview
 
