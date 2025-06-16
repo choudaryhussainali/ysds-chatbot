@@ -12,6 +12,8 @@ This project is an AI-powered chatbot built for **Yashfeen Skills Development Se
 - 🖼️ Custom UI with branded background and assistant icon
 - 🔒 Supports chat history and session memory
 
+---
+
 ## ⚙️ Technologies Used
 
 - Python
@@ -19,6 +21,8 @@ This project is an AI-powered chatbot built for **Yashfeen Skills Development Se
 - LangChain
 - Google Gemini API (`langchain-google-genai`)
 - HTML/CSS (for UI customization)
+
+---
 
 ## 🧪 How to Run Locally
 
@@ -29,21 +33,52 @@ This project is an AI-powered chatbot built for **Yashfeen Skills Development Se
 
 
 
-## Install Dependencies.
+### Install Dependencies.
      ```bash
       pip install -r requirements.txt
 
-## Add your Google API key in .streamlit/secrets.toml
+### Add your Google API key in .streamlit/secrets.toml
 
-GOOGLE_API_KEY = "your_gemini_api_key_here"
+      '''bash
+        GOOGLE_API_KEY = "your_gemini_api_key_here"
 
-## Hot to RUN.
 
- streamlit run app.py
+--- 
 
-## 📷 Preview
+### 4. Run 
+
+```bash
+python chatbot.py
+```
+
+---
+
+### 📷 Preview
 
 
 ![Screenshot (27)](https://github.com/user-attachments/assets/6da01bf8-8249-4f11-bd1b-d2a9cdb7af5f)
+
+
+---
+
+
+## 📄 License
+
+This project is proprietary and confidential. All rights reserved.
+
+```
+© 2025 HUSSAIN ALI. This code may not be copied, modified, distributed, or used without explicit permission.
+```
+
+---
+
+## 📬 Contact
+
+For questions or collaboration requests:
+
+* 📧 Email: [choudaryhussainali@outlook.com](mailto:choudaryhussainali@outlook.com)
+* 🌐 GitHub: [choudaryhussainali](https://github.com/choudaryhussainali)
+
+---
 
 
