@@ -38,22 +38,23 @@ This project is an AI-powered chatbot built for **Yashfeen Skills Development Se
 
 ## 📁 Project Structure
 
-'''
-      ysds-chatbot/
-      │
-      ├── .streamlit/
-      │   └── secrets.toml                # ← put your Google API key here
-      │
-      ├── assets/
-      │   ├── icon.jpeg                   # assistant avatar
-      │   ├── bg.png                      # background image
-      │   └── logo.jpeg                   # sidebar logo
-      │
-      ├── app.py                          # main Streamlit chatbot script
-      ├── requirements.txt                # Python dependencies (see below)
-      ├── README.md                       # full project documentation (see below)
-      └── LICENSE                         # optional open‑source licence
-'''
+```
+ysds-chatbot/
+│
+├── .streamlit/
+│   └── secrets.toml                # put your Google API key here
+│
+├── assets/
+│   ├── icon.jpeg                   # assistant avatar
+│   ├── bg.png                      # background image
+│   └── logo.jpeg                   # sidebar logo
+│
+├── app.py                          # main Streamlit chatbot script
+├── requirements.txt                # Python dependencies (see below)
+├── README.md                       # full project documentation (see below)
+└── LICENSE                         # optional open‑source licence
+
+```
 
 ---
 
