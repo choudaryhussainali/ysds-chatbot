@@ -69,19 +69,19 @@ ysds-chatbot/
 
 ### Install Dependencies.
      ```bash
-      pip install -r requirements.txt
+     pip install -r requirements.txt
 
 ### Add your Google API key in .streamlit/secrets.toml
 
-      '''bash
-        GOOGLE_API_KEY = "your_gemini_api_key_here"
+      ```bash
+      GOOGLE_API_KEY = "your_gemini_api_key_here"
 
 
 --- 
 
 ### 4. Run 
 
-```bash
+```
 python chatbot.py
 ```
 
