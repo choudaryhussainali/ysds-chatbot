@@ -1,7 +1,7 @@
 # 🎓 YSDS Chatbot – AI-Powered Informational Assistant
 
-This project is an AI-powered chatbot built for **Yashfeen Skills Development Services (YSDS)** using Streamlit and Gemini API. It provides students and visitors with accurate, human-like responses to questions about courses, admissions, and institute details.
----
+    This project is an AI-powered chatbot built for **Yashfeen Skills Development Services (YSDS)** using Streamlit and Gemini API. It provides students and visitors      with accurate, human-like responses to questions about courses, admissions, and institute details.
+-------
 
 ![Streamlit](https://img.shields.io/badge/Built%20with-Streamlit-f06) ![Python](https://img.shields.io/badge/Built%20with-Pyhton-yellow) ![License](https://img.shields.io/badge/License-MIT-green) ![Made with ❤](https://img.shields.io/badge/Made%20with-%E2%9D%A4-red) 
 
