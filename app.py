@@ -1,83 +1,113 @@
 import streamlit as st
 from langchain_google_genai import ChatGoogleGenerativeAI
+# --- CHANGED: Removed broken legacy imports ---
 from langchain_community.chat_message_histories import ChatMessageHistory
-from langchain_core.chat_history import BaseChatMessageHistory
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_core.output_parsers import StrOutputParser
+# ----------------------------------------------
 import base64
 import os
 
-# --- PAGE CONFIG ---
-st.set_page_config(page_title="YSDS - Yashfeen Skills Development Services", layout="wide", page_icon="💡")
-st.title("🎓Welcome to **YSDS**")
 
-# --- ASSETS & STYLING ---
-logo_path = "icon.jpeg"  
-background_path = "bg.png" 
+with open("knowledge_base.txt", "r", encoding="utf-8") as file:
+    SCRIPT = file.read()
 
-# Load Knowledge Base
-if os.path.exists("knowledge_base.txt"):
-    with open("knowledge_base.txt", "r", encoding="utf-8") as file:
-        SCRIPT = file.read()
-else:
-    SCRIPT = "You are a helpful assistant for Yashfeen Skills Development Services."
-
-# Helper: Encode Image
+# Function to encode the image to base64
 def get_base64_of_image(img_file):
-    try:
-        with open(img_file, "rb") as f:
-            return base64.b64encode(f.read()).decode()
-    except: return ""
-
-# Helper: Assistant Avatar CSS
+    with open(img_file, "rb") as f:
+        return base64.b64encode(f.read()).decode()
 def assistant_chat_css(logo_file):
-    base64_image = get_base64_of_image(logo_file)
-    if not base64_image: return ""
-    return f"""
+    try:
+        base64_image = get_base64_of_image(logo_file)
+        return f"""
     <style>
-        .stChatMessage .avatar {{
-            background-image: url("data:image/jpeg;base64,{base64_image}");
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            border-radius: 50%;
+        .streamlit-chat-message[data-streamlit-widget="ChatMessage(role='assistant')] div:first-child {{
+            background-image: url("data:image/jpeg;base64,{base64_image}") !important; /* Adjust image type if needed */
+            background-position: center center !important;
+            background-repeat: no-repeat !important;
+            background-size: contain !important;
+            width: 3em !important;
+            height: 3em !important;
+            border-radius: 50% !important;
+            background-color: #f0f2f6 !important;
+        }}
+        .streamlit-chat-message[data-streamlit-widget="ChatMessage(role='assistant')] div:first-child img {{
+            visibility: hidden !important;
         }}
     </style>
     """
+    except FileNotFoundError:
+        st.error(f"Error: Logo file not found.")
+        return ""
+    except Exception as e:
+        st.error(f"Error encoding logo: {e}")
+        return ""
 
-# Helper: Background CSS
+
+    st.markdown(assistant_chat_css(logo_path), unsafe_allow_html=True)
+
+
+
 def set_background(image_file):
-    base64_image = get_base64_of_image(image_file)
-    if base64_image:
+    """Sets the background of the Streamlit app behind the chat area with reduced opacity."""
+    try:
+        base64_image = get_base64_of_image(image_file)
         st.markdown(
             f"""
             <style>
             .stApp {{
-                background-image: url("data:image/jpeg;base64,{base64_image}");
-                background-size: cover; 
-                background-position: center;
-                background-attachment: fixed;
-            }}
+                background-image: url("data:image/jpeg;base64,{base64_image}"); /* Adjust image type if needed */
+                background-size: contain;
+                background-repeat: no-repeat;
+                position: fixed; /* To fix it behind other elements */
+                top: 200;
+                left: 0;
+                right: 200 ;
+                bottom: 100;
+
+                width: 100%;
+                height: 100%;
+                z-index: -1; /* To place it behind other elements */    
+                background-position: right 50px center;
+                background-position: 75% center;        }}
             </style>
             """,
             unsafe_allow_html=True
         )
+    except FileNotFoundError:
+        st.error(f"Error: Background image file not found.")
+    except Exception as e:
+        st.error(f"Error encoding background image: {e}")
 
-# Apply Styling
+
+st.set_page_config(page_title="YSDS - Yashfeen Skills Development Services", layout="wide", page_icon="💡")
+st.title("🎓Welcome to **YSDS**")
+
+google_api_key = st.secrets.get("GOOGLE_API_KEY")
+
+
+logo_path = "icon.jpeg"  
+background_path = "bg.png" 
+
+
 set_background(background_path)
-st.markdown(assistant_chat_css(logo_path), unsafe_allow_html=True)
 
-# --- SIDEBAR ---
 with st.sidebar:
+    # Display the logo in the sidebar
     st.image("logo.jpeg", use_container_width=150)
+
     st.markdown(
         """
         <div style='text-align: center;'>
             <h4><b> 🌟Yashfeen Skills Development🌟 </b>\n\n Services \n\n----------------- \n\n <em>Empowering youth through practical tech skills</em> </h4>
         </div>
-        """, unsafe_allow_html=True
+        """,
+        unsafe_allow_html=True
     )
+
+
+with st.sidebar:
 
     st.markdown("### 📌 Contact Us")
     st.write("📧 Email: info@yes.edu.pk")
@@ -86,6 +116,9 @@ with st.sidebar:
     st.write("🌐 Website: [www.yes.edu.pk](http://www.yes.edu.pk)")
     st.write("📍  Address: 9-Saeed Park Ravi Road Infront Shahdara Fly-over, Shahdarah Lahore, Pakistan.")
     st.write("🔗 [Facebook](https://www.facebook.com/YashfeenSkills) | [Instagram](https://www.instagram.com/yashfeenskills/) | [LinkedIn](https://www.linkedin.com/company/yashfeen-skills-development-services/)")
+
+
+
 
     st.header("📋 List of Courses.")
     courses = {
@@ -119,57 +152,54 @@ with st.sidebar:
     st.markdown("---")
     st.caption("💡 Ask me about syllabus, Eligibility-Criteria or admission process!")
 
+with st.sidebar:
     st.markdown("### ⚙️ Settings")
     if st.button("Clear Chat History"):
         st.session_state.messages = []
-        st.session_state["chat_history"] = []
-        st.session_state["memory_store"] = {} # Clear AI memory
+        st.session_state["memory_store"] = {} # Clear logic memory
         st.success("Chat history cleared!")
 
-# --- SESSION STATE INIT ---
+
 if "chat_history" not in st.session_state:
     st.session_state["chat_history"] = []
     st.session_state["has_greeted"] = False 
 
-# --- AI LOGIC (MODERN FIX) ---
-# Function to manage chat history for the AI
-def get_session_history(session_id: str) -> BaseChatMessageHistory:
-    if "memory_store" not in st.session_state:
-        st.session_state["memory_store"] = {}
+# --- UPDATED LOGIC SECTION (INVISIBLE TO UI) ---
+# Replaced ConversationBufferMemory with Memory Store for compatibility
+if "memory_store" not in st.session_state:
+    st.session_state["memory_store"] = {}
+
+def get_session_history(session_id: str):
     if session_id not in st.session_state["memory_store"]:
         st.session_state["memory_store"][session_id] = ChatMessageHistory()
     return st.session_state["memory_store"][session_id]
-
-google_api_key = st.secrets.get("GOOGLE_API_KEY")
+# -----------------------------------------------
 
 if google_api_key:
-    # 1. Create LLM
     llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash", google_api_key=google_api_key, temperature=0.5)
     
-    # 2. Create Prompt (Replaces PromptTemplate)
-    prompt = ChatPromptTemplate.from_messages([
+    # --- UPDATED: Modern Prompt to avoid dependency issues ---
+    prompt_template = ChatPromptTemplate.from_messages([
         ("system", "{script}"),
         MessagesPlaceholder(variable_name="history"),
         ("human", "{input}"),
     ])
-
-    # 3. Create Chain (Replaces ConversationChain)
-    chain = prompt | llm | StrOutputParser()
-
-    # 4. Wrap with Memory
-    conversation_chain = RunnableWithMessageHistory(
-        chain,
+    
+    # --- UPDATED: Modern Chain Definition ---
+    runnable_chain = prompt_template | llm | StrOutputParser()
+    
+    chain = RunnableWithMessageHistory(
+        runnable_chain,
         get_session_history,
         input_messages_key="input",
         history_messages_key="history",
     )
-
+    # ---------------------------------------------------------
 else:
-    st.error("Google API key not found in secrets.")
+    st.error("Google API key not found. Please add it to `.streamlit/secrets.toml` as GOOGLE_API_KEY")
     st.stop()
 
-
-# --- CHAT INTERFACE ---
+st.markdown(assistant_chat_css(logo_path), unsafe_allow_html=True)
 
 if not st.session_state["has_greeted"]:
     initial_greeting = "👋Hi! I'm Sam, Your informational guide from **Yashfeen Skills Development Services**. Ask me anything about courses, fees, or admissions!☺️"
@@ -180,8 +210,9 @@ for msg in st.session_state["chat_history"]:
     with st.chat_message(msg["role"]):
         st.markdown(msg["content"])
 
-user_input = st.chat_input("Ask something about Yashfeen Education System...")
 
+
+user_input = st.chat_input("Ask something about Yashfeen Education System...")
 if user_input:
     st.chat_message("user").markdown(user_input)
     st.session_state["chat_history"].append({"role": "user", "content": user_input})
@@ -189,12 +220,12 @@ if user_input:
     with st.chat_message("assistant"):
         with st.spinner("Thinking..."):
             try:
-                # Modern method to run the chain
-                bot_response = conversation_chain.invoke(
+                # --- UPDATED: Invocation Syntax (UI remains same, just the call changes) ---
+                bot_response = chain.invoke(
                     {"input": user_input, "script": SCRIPT},
-                    config={"configurable": {"session_id": "default_session"}}
+                    config={"configurable": {"session_id": "default"}}
                 )
-                
+                # -----------------------------------------------------------------------
                 st.markdown(bot_response)
                 st.session_state["chat_history"].append({"role": "assistant", "content": bot_response})
             except Exception as e:
