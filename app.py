@@ -225,7 +225,13 @@ if user_input:
                     {"input": user_input, "script": SCRIPT},
                     config={"configurable": {"session_id": "default"}}
                 )
-                # -----------------------------------------------------------------------
+
+                # -----------------------------------------------------------
+                # FIX: Extract clean text only (IMPORTANT)
+                if not isinstance(bot_response, str):
+                    bot_response = bot_response.content
+                # -----------------------------------------------------------
+
                 st.markdown(bot_response)
                 st.session_state["chat_history"].append({"role": "assistant", "content": bot_response})
             except Exception as e:
