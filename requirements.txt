@@ -1,10 +1,11 @@
 streamlit
 requests
 groq
-langchain
+langchain>=0.1.0
 faiss-cpu
 langchain-google-genai
 python-dotenv
 langchain-community
 langchain-core
+
 
