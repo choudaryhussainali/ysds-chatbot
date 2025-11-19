@@ -9,9 +9,12 @@ from langchain_core.output_parsers import StrOutputParser
 import base64
 import os
 
+st.set_page_config(page_title="YSDS - Yashfeen Skills Development Services", layout="wide", page_icon="💡")
+st.title("🎓Welcome to **YSDS**")
 
 with open("knowledge_base.txt", "r", encoding="utf-8") as file:
     SCRIPT = file.read()
+
 
 # Function to encode the image to base64
 def get_base64_of_image(img_file):
@@ -80,9 +83,6 @@ def set_background(image_file):
     except Exception as e:
         st.error(f"Error encoding background image: {e}")
 
-
-st.set_page_config(page_title="YSDS - Yashfeen Skills Development Services", layout="wide", page_icon="💡")
-st.title("🎓Welcome to **YSDS**")
 
 google_api_key = st.secrets.get("GOOGLE_API_KEY")
 
@@ -210,8 +210,6 @@ for msg in st.session_state["chat_history"]:
     with st.chat_message(msg["role"]):
         st.markdown(msg["content"])
 
-
-
 user_input = st.chat_input("Ask something about Yashfeen Education System...")
 if user_input:
     st.chat_message("user").markdown(user_input)
@@ -220,12 +218,10 @@ if user_input:
     with st.chat_message("assistant"):
         with st.spinner("Thinking..."):
             try:
-                # --- UPDATED: Invocation Syntax (UI remains same, just the call changes) ---
                 bot_response = chain.invoke(
                     {"input": user_input, "script": SCRIPT},
                     config={"configurable": {"session_id": "default"}}
                 )
-                # -----------------------------------------------------------------------
                 st.markdown(bot_response)
                 st.session_state["chat_history"].append({"role": "assistant", "content": bot_response})
             except Exception as e:
