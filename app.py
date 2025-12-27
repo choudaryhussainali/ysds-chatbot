@@ -176,7 +176,7 @@ def get_session_history(session_id: str):
 # -----------------------------------------------
 
 if google_api_key:
-    llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash", google_api_key=google_api_key, temperature=0.5)
+    llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", google_api_key=google_api_key, temperature=0.5)
     
     # --- UPDATED: Modern Prompt to avoid dependency issues ---
     prompt_template = ChatPromptTemplate.from_messages([
@@ -236,3 +236,4 @@ if user_input:
                 st.session_state["chat_history"].append({"role": "assistant", "content": bot_response})
             except Exception as e:
                 st.error(f"Error: {e}")
+
